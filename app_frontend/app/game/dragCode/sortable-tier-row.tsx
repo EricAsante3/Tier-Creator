@@ -1,0 +1,51 @@
+import { Column } from "./tier-board.types";
+import { cn } from "./tier-board.types";
+import { UniqueIdentifier } from "@dnd-kit/core";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+import { CSSProperties } from "react";
+import TierRow from "./tier-row";
+
+interface SortableTaskColumnProps {
+  className?: string;
+  column: Column<string, string>;
+  columnId: UniqueIdentifier;
+  children?: React.ReactNode;
+  onClickDelete?: (columnId: UniqueIdentifier) => void;
+}
+export default function SortableTierRow({
+  className,
+  column,
+  columnId,
+  children,
+  onClickDelete,
+}: SortableTaskColumnProps) {
+  const {
+    listeners,
+    attributes,
+    transform,
+    transition,
+    isDragging,
+    setNodeRef,
+  } = useSortable({ id: columnId });
+
+  const style: CSSProperties = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
+
+  return (
+    <TierRow
+      ref={setNodeRef}
+      style={style}
+      className={cn({ "opacity-40 border-amber-500": isDragging }, className)}
+      column={column}
+      columnId={columnId}
+      onClickDelete={onClickDelete}
+      listeners={listeners}
+      attributes={attributes}
+    >
+      {children}
+    </TierRow>
+  );
+}
