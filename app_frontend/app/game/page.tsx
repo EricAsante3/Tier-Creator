@@ -20,7 +20,57 @@ import { useCallback, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import SortableTierRow from "./dragCode/sortable-tier-row";
-import TierRow from "./dragCode/tier-row";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import SortableTierBase from "./dragCode/sortable-tier-base";
 import SortableTeirCardItem from "./dragCode/sortable-tier-card-item";
 import TeirCardItem from "./dragCode/tier-card-item";
