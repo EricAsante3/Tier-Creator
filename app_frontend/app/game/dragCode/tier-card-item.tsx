@@ -18,15 +18,26 @@ export default function TeirCardItem({
   attributes,
   listeners,
 }: TaskItemProps) {
+
+  const combinedStyle = {
+    ...style, // keep any styles passed in
+    backgroundImage: `url(${item.image_url})`,
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+    
+  };
+
+
+
   return (
     <div
-    style={style}
+    style={combinedStyle}
       className={className}
       ref={ref}
       {...listeners}
       {...attributes}
     >
-        {item.id + item.data}
     </div>
 
 

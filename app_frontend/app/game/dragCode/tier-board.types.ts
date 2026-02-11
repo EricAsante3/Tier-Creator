@@ -5,7 +5,7 @@ import { twMerge } from "tailwind-merge"
 
 export type Item<T> = {
   id: UniqueIdentifier;
-  data: T;
+  image_url: T;
 };
 
 export type Column<T, E> = {

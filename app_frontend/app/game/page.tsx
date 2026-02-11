@@ -113,115 +113,26 @@ const initialData: Data<string, string> = {
   ["Tier-Base-id"]: {
     data: "Tier-Base",
     children: [
-  { id: "todo-item-1", data: "Todo 1" },
-  { id: "todo-item-2", data: "Todo 2" },
-  { id: "todo-item-3", data: "Todo 3" },
-  { id: "todo-item-4", data: "Todo 4" },
-  { id: "todo-item-5", data: "Todo 5" },
-  { id: "todo-item-6", data: "Todo 6" },
-  { id: "todo-item-7", data: "Todo 7" },
-  { id: "todo-item-8", data: "Todo 8" },
-  { id: "todo-item-9", data: "Todo 9" },
-  { id: "todo-item-10", data: "Todo 10" },
-
-  { id: "todo-item-11", data: "Todo 11" },
-  { id: "todo-item-12", data: "Todo 12" },
-  { id: "todo-item-13", data: "Todo 13" },
-  { id: "todo-item-14", data: "Todo 14" },
-  { id: "todo-item-15", data: "Todo 15" },
-  { id: "todo-item-16", data: "Todo 16" },
-  { id: "todo-item-17", data: "Todo 17" },
-  { id: "todo-item-18", data: "Todo 18" },
-  { id: "todo-item-19", data: "Todo 19" },
-  { id: "todo-item-20", data: "Todo 20" },
-
-  { id: "todo-item-21", data: "Todo 21" },
-  { id: "todo-item-22", data: "Todo 22" },
-  { id: "todo-item-23", data: "Todo 23" },
-  { id: "todo-item-24", data: "Todo 24" },
-  { id: "todo-item-25", data: "Todo 25" },
-  { id: "todo-item-26", data: "Todo 26" },
-  { id: "todo-item-27", data: "Todo 27" },
-  { id: "todo-item-28", data: "Todo 28" },
-  { id: "todo-item-29", data: "Todo 29" },
-  { id: "todo-item-30", data: "Todo 30" },
-
-  { id: "todo-item-31", data: "Todo 31" },
-  { id: "todo-item-32", data: "Todo 32" },
-  { id: "todo-item-33", data: "Todo 33" },
-  { id: "todo-item-34", data: "Todo 34" },
-  { id: "todo-item-35", data: "Todo 35" },
-  { id: "todo-item-36", data: "Todo 36" },
-  { id: "todo-item-37", data: "Todo 37" },
-  { id: "todo-item-38", data: "Todo 38" },
-  { id: "todo-item-39", data: "Todo 39" },
-  { id: "todo-item-40", data: "Todo 40" },
-
-  { id: "todo-item-41", data: "Todo 41" },
-  { id: "todo-item-42", data: "Todo 42" },
-  { id: "todo-item-43", data: "Todo 43" },
-  { id: "todo-item-44", data: "Todo 44" },
-  { id: "todo-item-45", data: "Todo 45" },
-  { id: "todo-item-46", data: "Todo 46" },
-  { id: "todo-item-47", data: "Todo 47" },
-  { id: "todo-item-48", data: "Todo 48" },
-  { id: "todo-item-49", data: "Todo 49" },
-  { id: "todo-item-50", data: "Todo 50" },
-
-  { id: "todo-item-51", data: "Todo 51" },
-  { id: "todo-item-52", data: "Todo 52" },
-  { id: "todo-item-53", data: "Todo 53" },
-  { id: "todo-item-54", data: "Todo 54" },
-  { id: "todo-item-55", data: "Todo 55" },
-  { id: "todo-item-56", data: "Todo 56" },
-  { id: "todo-item-57", data: "Todo 57" },
-  { id: "todo-item-58", data: "Todo 58" },
-  { id: "todo-item-59", data: "Todo 59" },
-  { id: "todo-item-60", data: "Todo 60" },
-
-  { id: "todo-item-61", data: "Todo 61" },
-  { id: "todo-item-62", data: "Todo 62" },
-  { id: "todo-item-63", data: "Todo 63" },
-  { id: "todo-item-64", data: "Todo 64" },
-  { id: "todo-item-65", data: "Todo 65" },
-  { id: "todo-item-66", data: "Todo 66" },
-  { id: "todo-item-67", data: "Todo 67" },
-  { id: "todo-item-68", data: "Todo 68" },
-  { id: "todo-item-69", data: "Todo 69" },
-  { id: "todo-item-70", data: "Todo 70" },
-
-  { id: "todo-item-71", data: "Todo 71" },
-  { id: "todo-item-72", data: "Todo 72" },
-  { id: "todo-item-73", data: "Todo 73" },
-  { id: "todo-item-74", data: "Todo 74" },
-  { id: "todo-item-75", data: "Todo 75" },
-  { id: "todo-item-76", data: "Todo 76" },
-  { id: "todo-item-77", data: "Todo 77" },
-  { id: "todo-item-78", data: "Todo 78" },
-  { id: "todo-item-79", data: "Todo 79" },
-  { id: "todo-item-80", data: "Todo 80" },
-
-  { id: "todo-item-81", data: "Todo 81" },
-  { id: "todo-item-82", data: "Todo 82" },
-  { id: "todo-item-83", data: "Todo 83" },
-  { id: "todo-item-84", data: "Todo 84" },
-  { id: "todo-item-85", data: "Todo 85" },
-  { id: "todo-item-86", data: "Todo 86" },
-  { id: "todo-item-87", data: "Todo 87" },
-  { id: "todo-item-88", data: "Todo 88" },
-  { id: "todo-item-89", data: "Todo 89" },
-  { id: "todo-item-90", data: "Todo 90" },
-
-  { id: "todo-item-91", data: "Todo 91" },
-  { id: "todo-item-92", data: "Todo 92" },
-  { id: "todo-item-93", data: "Todo 93" },
-  { id: "todo-item-94", data: "Todo 94" },
-  { id: "todo-item-95", data: "Todo 95" },
-  { id: "todo-item-96", data: "Todo 96" },
-  { id: "todo-item-97", data: "Todo 97" },
-  { id: "todo-item-98", data: "Todo 98" },
-  { id: "todo-item-99", data: "Todo 99" },
-  { id: "todo-item-100", data: "Todo 100" },
+        {
+            "id": "22e771b4-ffd9-4cd2-9844-b1a50d37720d",
+            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/0d14d70d7b0534aa6631f4b21bd7918b.png"
+        },
+        {
+            "id": "47124aaf-4df6-475f-93a8-957c1d368308",
+            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/2747c30d4c574d5beb88dd4b2ffc93e4.jpg"
+        },
+        {
+            "id": "ae28fea7-5a3e-4064-9eb6-697c02b831c3",
+            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/red.jpeg"
+        },
+        {
+            "id": "c54d48f5-edbd-4083-8a46-4807c1b8fbba",
+            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/9cee5e3436559735edc1d6286c3ec1f0.jpg"
+        },
+        {
+            "id": "f98ff8ec-4024-43c4-af77-533c63b34fa1",
+            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/img0831.png"
+        }
 
     ],
   }
@@ -345,7 +256,7 @@ export default function Home() {
         );
 
         if (activeItem) {
-          content = <TeirCardItem item={activeItem} className="cursor-grabbing" />;
+          content = <TeirCardItem item={activeItem} className="cursor-grabbing aspect-square w-20" />;
         }
       }
     }
