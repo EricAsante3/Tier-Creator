@@ -11,7 +11,7 @@ export default function Home() {
   return (
   <>
   
-    <main className="flex min-h-screen h-full justify-center bg-foreground">
+    <main className="flex min-h-screen h-full justify-center bg-background">
 
       <div className="w-10/12 bg-red-600 grid grid-cols-8  gap-4 p-4 ">
 

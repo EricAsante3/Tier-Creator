@@ -26,16 +26,23 @@ export default function TierRow({
   listeners,
   onClickDelete,
 }: TierRowProps) {
+
+
   return (
     <div  
     style={style}
     className={className}
     ref={ref}>
         
-        <div className="bg-red-200 aspect-square w-1/12 ">
+        <div 
+          style={{ backgroundColor: column?.data?.color }}
+          className="bg-red-300 aspect-square max-w-1/12 w-1/12 border-red-900/50 rounded-xs border-2 flex items-center justify-center overflow-hidden">
+          <h1 className="text-sm text-white  text-center w-full line-clamp-3 wrap-break-words min-w-0 min-h-0 overflow-hidden">
+            {column.data.title}
+          </h1>
         </div>
 
-        <div className="bg-yellow-200 w-full aspect-12/1 flex flex-wrap">
+        <div className="bg-foreground w-full aspect-12/1 flex flex-wrap">
             {children}
         </div>
     </div>

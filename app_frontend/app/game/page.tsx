@@ -1,5 +1,5 @@
 "use client";
-
+import { GearIcon } from "@/icons/icons";
 import { Data } from "./dragCode/tier-board.types";
 import {
   closestCenter,
@@ -20,98 +20,49 @@ import { useCallback, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import SortableTierRow from "./dragCode/sortable-tier-row";
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import SortableTierBase from "./dragCode/sortable-tier-base";
 import SortableTeirCardItem from "./dragCode/sortable-tier-card-item";
 import TeirCardItem from "./dragCode/tier-card-item";
+import { title } from "process";
+
 const initialData: Data<string, string> = {
   ["Tier-S-id"]: {
-    data: "Tier-S",
+    data: {color: "#88E788", title: "S"},
     children: [
 
     ],
   },
 
   ["Tier-A-id"]: {
-    data: "Tier-A",
+    data: {color: "#008000", title: "A"},
     children: [
 
     ],
   },
 
   ["Tier-B-id"]: {
-    data: "Tier-B",
+    data: {color: "#FFA500", title: "B"},
     children: [
 
     ],
   },
 
   ["Tier-C-id"]: {
-    data: "Tier-C",
+    data: {color: "#ff4d00", title: "C"},
     children: [
 
     ],
   },
 
   ["Tier-F-id"]: {
-    data: "Tier-F",
+    data: {color: "#FF0000", title: "F"},
     children: [
 
     ],
   },
 
   ["Tier-Base-id"]: {
-    data: "Tier-Base",
+    data: {color: "#ffffff"},
     children: [
         {
             "id": "22e771b4-ffd9-4cd2-9844-b1a50d37720d",
@@ -132,7 +83,59 @@ const initialData: Data<string, string> = {
         {
             "id": "f98ff8ec-4024-43c4-af77-533c63b34fa1",
             "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/img0831.png"
-        }
+        },
+
+
+
+
+
+        {
+            "id": "22e7721b4-ffd9-4cd2-9844-b1a50d37720d",
+            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/0d14d70d7b0534aa6631f4b21bd7918b.png"
+        },
+        {
+            "id": "47124aa2f-4df6-475f-93a8-957c1d368308",
+            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/2747c30d4c574d5beb88dd4b2ffc93e4.jpg"
+        },
+        {
+            "id": "ae282fea7-5a3e-4064-9eb6-697c02b831c3",
+            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/red.jpeg"
+        },
+        {
+            "id": "c54d428f5-edbd-4083-8a46-4807c1b8fbba",
+            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/9cee5e3436559735edc1d6286c3ec1f0.jpg"
+        },
+        {
+            "id": "f98ff8e2c-4024-43c4-af77-533c63b34fa1",
+            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/img0831.png"
+        },
+
+
+
+
+
+           {
+            "id": "22e771b4-3ffd9-4cd2-9844-b1a50d37720d",
+            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/0d14d70d7b0534aa6631f4b21bd7918b.png"
+        },
+        {
+            "id": "47124aaf3-4df6-475f-93a8-957c1d368308",
+            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/2747c30d4c574d5beb88dd4b2ffc93e4.jpg"
+        },
+        {
+            "id": "ae28fea7-53a3e-4064-9eb6-697c02b831c3",
+            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/red.jpeg"
+        },
+        {
+            "id": "c54d48f5-3edbd-4083-8a46-4807c1b8fbba",
+            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/9cee5e3436559735edc1d6286c3ec1f0.jpg"
+        },
+        {
+            "id": "f98ff8ec-40324-43c4-af77-533c63b34fa1",
+            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/img0831.png"
+        },     
+
+
 
     ],
   }
@@ -208,7 +211,7 @@ export default function Home() {
   function handleClickAddColumn() {
     const newData = {
       ...data,
-      [uuidv4()]: { data: "New column", children: [] },
+      [uuidv4()]: { data: {"color": "ss"}, children: [] },
     };
     setData(newData);
     setColumnIds(Object.keys(newData));
@@ -417,7 +420,7 @@ export default function Home() {
   return (
   <>
   
-    <main className="flex min-h-screen h-full justify-center bg-foreground">
+    <main className="flex min-h-screen h-full justify-center bg-background">
       <DndContext
         id="dnd-kanban-context-id"
         collisionDetection={customCollision}
@@ -432,7 +435,10 @@ export default function Home() {
 
         <div>
         </div>
-        <div className="w-full flex flex-col space-y-2 items-center">
+        <div className="w-full flex flex-col space-y-2 items-center relative" onClick={handleClickAddColumn}>
+          <div  className="absolute bottom-14/16 left-0/3 aspect-square w-1/32">
+            <GearIcon className="opacity-45 cursor-pointer" stroke="#ffffff"></GearIcon>
+          </div>
 
           {columnIds
             .filter((columnId) => columnId !== "Tier-Base-id")
@@ -469,7 +475,7 @@ export default function Home() {
           columnId={"Tier-Base-id"}
           column={data["Tier-Base-id"]}
           onClickDelete={handleClickDeleteColumn}
-          className="w-full h-fit bg-red-950 min-h-96 border-white border-2"
+          className="w-full h-fit rounded-md bg-foreground min-h-96  border-white/25 border-4"
         >
           <SortableContext items={data["Tier-Base-id"].children}>
               {data["Tier-Base-id"].children.map((item) => (

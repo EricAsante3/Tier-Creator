@@ -9,7 +9,7 @@ export type Item<T> = {
 };
 
 export type Column<T, E> = {
-  data: T;
+  data: Record<string, string>;
   children: Item<E>[];
 };
 

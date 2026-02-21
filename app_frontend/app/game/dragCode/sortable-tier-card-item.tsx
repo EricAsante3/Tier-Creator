@@ -32,7 +32,7 @@ export default function SortableTeirCardItem({
       style={style}
       className={cn(
         "cursor-grab",
-        { "opacity-40 border border-amber-500": isDragging },
+        { "opacity-40": isDragging },
         className
       )}
       item={item}

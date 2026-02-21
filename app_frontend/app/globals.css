@@ -6,12 +6,12 @@
 
 .light {
   --background: #121212;
-  --foreground: #121212;
+  --foreground: #383737;
 }
 
 .dark {
   --background: #121212;
-  --foreground: #121212;
+  --foreground: #383737;
 }
 
 @theme inline {
