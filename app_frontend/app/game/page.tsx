@@ -1,6 +1,7 @@
 "use client";
-import { GearIcon } from "@/icons/icons";
-import { Data } from "./dragCode/tier-board.types";
+import { GearIcon, ResetIcon, PlusIcon, ArrowDownIcon, AddRowIcon } from "@/icons/icons";
+import { Data, moveAllOthersInto, moveFromRowInto } from "./dragCode/tier-board.types";
+
 import {
   closestCenter,
   CollisionDetection,
@@ -23,11 +24,11 @@ import SortableTierRow from "./dragCode/sortable-tier-row";
 import SortableTierBase from "./dragCode/sortable-tier-base";
 import SortableTeirCardItem from "./dragCode/sortable-tier-card-item";
 import TeirCardItem from "./dragCode/tier-card-item";
-import { title } from "process";
+import TierRow from "./dragCode/tier-row";
 
 const initialData: Data<string, string> = {
   ["Tier-S-id"]: {
-    data: {color: "#88E788", title: "S"},
+    data: {color: "#00d90b", title: "S"},
     children: [
 
     ],
@@ -84,11 +85,6 @@ const initialData: Data<string, string> = {
             "id": "f98ff8ec-4024-43c4-af77-533c63b34fa1",
             "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/img0831.png"
         },
-
-
-
-
-
         {
             "id": "22e7721b4-ffd9-4cd2-9844-b1a50d37720d",
             "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/0d14d70d7b0534aa6631f4b21bd7918b.png"
@@ -109,12 +105,7 @@ const initialData: Data<string, string> = {
             "id": "f98ff8e2c-4024-43c4-af77-533c63b34fa1",
             "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/img0831.png"
         },
-
-
-
-
-
-           {
+        {
             "id": "22e771b4-3ffd9-4cd2-9844-b1a50d37720d",
             "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/0d14d70d7b0534aa6631f4b21bd7918b.png"
         },
@@ -133,16 +124,13 @@ const initialData: Data<string, string> = {
         {
             "id": "f98ff8ec-40324-43c4-af77-533c63b34fa1",
             "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/img0831.png"
-        },     
-
-
-
+        },
     ],
   }
 };
 
-
 export default function Home() {
+  const [tierConfig, setTierConfig] = useState<boolean>(false);
   const [data, setData] = useState<Data<string, string>>(initialData);
   const [columnIds, setColumnIds] = useState<UniqueIdentifier[]>(
     Object.keys(data)
@@ -209,47 +197,63 @@ export default function Home() {
   );
 
   function handleClickAddColumn() {
+    const newId = uuidv4()
+
     const newData = {
       ...data,
-      [uuidv4()]: { data: {"color": "ss"}, children: [] },
+      [newId]: { data: {"color": "#ff9c9c", "title": "Default"}, children: [] },
     };
+
     setData(newData);
-    setColumnIds(Object.keys(newData));
+
+    setColumnIds(prev => [...prev, newId]);
   }
 
   function handleClickDeleteColumn(columnId: UniqueIdentifier) {
-    const newData = { ...data };
+    const newData = moveFromRowInto(data, columnId, "Tier-Base-id");
     delete newData[columnId];
+
     setData(newData);
-    setColumnIds(Object.keys(newData));
+    setColumnIds(prev => prev.filter(id => id !== columnId));
+  }
+
+  function handleRenameColumn(columnId: UniqueIdentifier, newTitle: string) {
+    setData((prev) => ({
+      ...prev,
+      [columnId]: {
+        ...prev[columnId],
+        data: {
+          ...prev[columnId].data,
+          title: newTitle,
+        },
+      },
+    }));
+  }
+
+  function handleColorChange(columnId: UniqueIdentifier, newColor: string) {
+    setData((prev) => ({
+      ...prev,
+      [columnId]: {
+        ...prev[columnId],
+        data: {
+          ...prev[columnId].data,
+          color: newColor,
+        },
+      },
+    }));
   }
 
   function renderOverlay() {
     let content: React.ReactNode = null;
     if (activeId) {
 
-      {/*
       // dragging a column
       if (data[activeId]) {
         content = (
-          <TaskColumn
-            columnId={activeId}
-            column={data[activeId]}
-            className="group"
-          >
-            <ScrollArea className="w-full h-full px-2">
-              {data[activeId].children.map((item) => (
-                <TaskItem
-                  key={item.id}
-                  item={item}
-                  className="mt-3 first:mt-0"
-                />
-              ))}
-            </ScrollArea>
-          </TaskColumn>
+
+          <div className="cursor-grabbing bg-amber-900 opacity-0 h-16"></div>
         );
       }
-      */}
 
       // dragging an item
       const columnId = findColumnId(activeId);
@@ -287,6 +291,7 @@ export default function Home() {
   function handleDragOver({ active, over }: DragOverEvent) {
     const overId = over?.id;
     const activeId = active.id;
+    console.log(overId)
     if (!overId || activeId in data) {
       return;
     }
@@ -417,9 +422,14 @@ export default function Home() {
     setColumnIds(Object.keys(cloneData));
   }
 
+  function restCards() {
+    setData(prev =>
+    moveAllOthersInto(prev, "Tier-Base-id")
+  );
+  }
+  
   return (
   <>
-  
     <main className="flex min-h-screen h-full justify-center bg-background">
       <DndContext
         id="dnd-kanban-context-id"
@@ -429,16 +439,31 @@ export default function Home() {
         onDragEnd={handleDragEnd}
         onDragCancel={handleDragCancel}
       >
-      <SortableContext items={columnIds}>
+      <SortableContext items={columnIds.filter(id => id !== "Tier-Base-id")}>
 
-      <div className="w-10/12 max-w-300 aspect-video grid grid-rows-[0.05fr_auto_1fr] gap-8">
+      <div className="w-10/12 max-w-300 aspect-video grid grid-rows-[0.05fr_auto_1fr] gap-8 ">
+
+
 
         <div>
         </div>
-        <div className="w-full flex flex-col space-y-2 items-center relative" onClick={handleClickAddColumn}>
-          <div  className="absolute bottom-14/16 left-0/3 aspect-square w-1/32">
-            <GearIcon className="opacity-45 cursor-pointer" stroke="#ffffff"></GearIcon>
+        <div className="w-full flex flex-col space-y-2 items-center relative">
+
+          <div className="absolute top-1/64 -left-1/82 aspect-square w-1/32 " onClick={() => setTierConfig(!tierConfig)}>
+            <GearIcon className="cursor-pointer w-full h-full" stroke="#ffffff"></GearIcon>
           </div>
+
+          {tierConfig ?
+
+            <div className="absolute bottom-0 -left-3/82 aspect-square w-2/32 " onClick={handleClickAddColumn}>
+                <AddRowIcon className="fill-white h-full w-full cursor-pointer "></AddRowIcon>
+            </div>
+
+          : 
+            null
+          }
+
+
 
           {columnIds
             .filter((columnId) => columnId !== "Tier-Base-id")
@@ -447,7 +472,12 @@ export default function Home() {
               key={columnId}
               columnId={columnId}
               column={data[columnId]}
+              activeCardId={activeId}
+              rowIds={columnIds}
+              tierConfig={tierConfig}
               onClickDelete={handleClickDeleteColumn}
+              renameColum={handleRenameColumn}
+              colorChange={handleColorChange}
               className="w-9/10 h-fit flex flex-row items-start relative"
             >
               <SortableContext items={data[columnId].children}>
@@ -464,19 +494,18 @@ export default function Home() {
 
         </div>
 
-
-
-
-
-
-
         <SortableTierBase
           key={"Tier-Base-id"}
           columnId={"Tier-Base-id"}
           column={data["Tier-Base-id"]}
           onClickDelete={handleClickDeleteColumn}
-          className="w-full h-fit rounded-md bg-foreground min-h-96  border-white/25 border-4"
+          className="w-full h-fit rounded-md bg-foreground min-h-96  border-white/25 border-4 relative"
         >
+
+          <div onClick={() => restCards()} className="absolute top-0 -left-1/20 aspect-square w-1/26" >
+            <ResetIcon className="cursor-pointer h-full w-full" stroke="#ffffff"></ResetIcon>
+          </div>
+
           <SortableContext items={data["Tier-Base-id"].children}>
               {data["Tier-Base-id"].children.map((item) => (
                 <SortableTeirCardItem
@@ -488,7 +517,6 @@ export default function Home() {
           </SortableContext>
         </SortableTierBase>
 
-        
       </div>
       </SortableContext>
 

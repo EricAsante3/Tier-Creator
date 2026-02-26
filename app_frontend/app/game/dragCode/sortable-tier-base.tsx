@@ -37,13 +37,11 @@ export default function SortableTierBase({
   return (
     <TierBase
       ref={setNodeRef}
-      style={style}
-      className={cn({ "opacity-40 border-amber-500": isDragging }, className)}
+      className={className}
       column={column}
       columnId={columnId}
       onClickDelete={onClickDelete}
-      listeners={listeners}
-      attributes={attributes}
+
     >
       {children}
     </TierBase>

@@ -30,7 +30,8 @@ export default function TierBase({
     <div  
     style={style}
     className={className}
-    ref={ref}>
+    ref={ref}    
+    >
 
         <div className="w-full aspect-12/1 flex flex-wrap">
             {children}

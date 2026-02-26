@@ -9,16 +9,26 @@ import TierRow from "./tier-row";
 interface SortableTaskColumnProps {
   className?: string;
   column: Column<string, string>;
+  activeCardId: UniqueIdentifier | null;
   columnId: UniqueIdentifier;
+  rowIds: UniqueIdentifier[];
   children?: React.ReactNode;
+  tierConfig: boolean;
   onClickDelete?: (columnId: UniqueIdentifier) => void;
+  renameColum?: (columnId: UniqueIdentifier, newTitle: string) => void;
+  colorChange?: (columnId: UniqueIdentifier, newColor: string) => void;
 }
 export default function SortableTierRow({
   className,
   column,
   columnId,
   children,
+  activeCardId,
+  rowIds,
+  tierConfig,
   onClickDelete,
+  renameColum,
+  colorChange,
 }: SortableTaskColumnProps) {
   const {
     listeners,
@@ -33,19 +43,31 @@ export default function SortableTierRow({
     transform: CSS.Transform.toString(transform),
     transition,
   };
+  const columnDragged = activeCardId !== null && rowIds.includes(activeCardId)
 
   return (
     <TierRow
       ref={setNodeRef}
       style={style}
-      className={cn({ "opacity-40 border-amber-500": isDragging }, className)}
+      tierConfig={tierConfig}
+      totRows={rowIds.length}
+      className={cn(
+        {
+          "opacity-50": columnDragged && !(isDragging),
+        },
+        className
+      )}
+
       column={column}
       columnId={columnId}
       onClickDelete={onClickDelete}
+      renameColum={renameColum}
+      colorChange={colorChange}
       listeners={listeners}
       attributes={attributes}
+      columnDragged={columnDragged}
     >
-      {children}
+      {columnDragged ? null : children}
     </TierRow>
   );
 }
