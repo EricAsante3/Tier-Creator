@@ -499,7 +499,7 @@ export default function Home() {
           columnId={"Tier-Base-id"}
           column={data["Tier-Base-id"]}
           onClickDelete={handleClickDeleteColumn}
-          className="w-full h-fit rounded-md bg-foreground min-h-96  border-white/25 border-4 relative"
+          className="w-full h-fit rounded-md bg-foreground min-h-96  border-highlight border-4 relative"
         >
 
           <div onClick={() => restCards()} className="absolute top-0 -left-1/20 aspect-square w-1/26" >

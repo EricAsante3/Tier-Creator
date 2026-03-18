@@ -1,71 +1,43 @@
 "use client"; // <-- needed in App Router for client-side interactivity
-import { useRouter } from "next/navigation";
+import SearchBar from "./homePageComponents/searchBar";
+import ContentGrid from "./homePageComponents/contentGrid";
+
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 
 export default function Home() {
-
   const router = useRouter();
-  const handleClick = () => {
-    router.push("/game"); // Navigate to /game page
+
+  const searchParams = useSearchParams();
+  console.log(searchParams.get("search_query"))
+
+  const [input, setInput] = useState(searchParams.get("search") || "");
+  
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      router.push(`/?search_query=${input}`);
+    }
   };
 
-  return (
+
+ return (
   <>
   
-    <main className="flex min-h-screen h-full justify-center bg-background">
-
-      <div className="w-10/12 bg-red-600 grid grid-cols-8  gap-4 p-4 ">
-
-
-        <div onClick={handleClick} className="bg-blue-50 row-span-2 col-span-2">
-        </div>
-        <div className="bg-blue-50 row-span-2 col-span-2">
-        </div>
-        <div className="bg-blue-50 row-span-2 col-span-2">
-        </div>
-        <div className="bg-blue-50 row-span-2 col-span-2">
-        </div>
-        <div className="bg-blue-50 row-span-2 col-span-2">
-        </div>
-        <div className="bg-blue-50 row-span-2 col-span-2">
-        </div>
-        <div className="bg-blue-50 row-span-2 col-span-2">
-        </div>
-        <div className="bg-blue-50 row-span-2 col-span-2">
-        </div>
-
-        <div className="bg-blue-50 row-span-2 col-span-2">
-        </div>
-        <div className="bg-blue-50 row-span-2 col-span-2">
-        </div>
-        <div className="bg-blue-50 row-span-2 col-span-2">
-        </div>
-        <div className="bg-blue-50 row-span-2 col-span-2">
-        </div>
-        <div className="bg-blue-50 row-span-2 col-span-2">
-        </div>
-        <div className="bg-blue-50 row-span-2 col-span-2">
-        </div>
-
-        <div className="bg-blue-50 row-span-2 col-span-2">
-        </div>
-
-        <div className="bg-blue-50 row-span-2 col-span-2">
-        </div>
-
-        <div className="bg-blue-50 row-span-2 col-span-2">
-        </div>
-        <div className="bg-blue-50 row-span-2 col-span-2">
-        </div>
+    <main className="flex min-h-screen  h-full justify-center bg-background">
 
 
 
-        <div className="bg-blue-50 row-span-2 col-span-2">
-        </div>
+    <div className="w-10/12 h-screen  flex flex-col relative">
+
+      <SearchBar></SearchBar>
+
+      <ContentGrid></ContentGrid>
 
 
-        <div className="bg-blue-50 row-span-2 col-span-2">
-        </div>
-      </div>
+    </div>
+
+
+
 
     </main>
   

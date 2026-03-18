@@ -1,26 +1,62 @@
 @import "tailwindcss";
 
+
+@font-face {
+  font-family: "ArchivoBlack";
+  src: url('/fonts/ArchivoBlack-Regular.ttf') format('truetype'); /* 'opentype' works too, but usually 'truetype' */
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "RobotoSlab";
+  src: url('/fonts/RobotoSlab-Regular.ttf') format('truetype'); /* 'opentype' works too, but usually 'truetype' */
+  font-weight: normal;
+  font-style: normal;
+}
+
+
 :root {
   min-width: 1024px;
+  --font-archivo: "ArchivoBlack", sans-serif;
+  --font-roboto: "RobotoSlab", sans-serif;
 }
 
 .light {
   --background: #121212;
   --foreground: #383737;
+  --highlight: #6a6a6a;
+  --text: #ffffff;
 }
 
 .dark {
   --background: #121212;
   --foreground: #383737;
+  --highlight: #6a6a6a;
+  --text: #ffffff;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-highlight: var(--highlight);
+  --color-text: var(--text);
+
+
+
+  --font-archivo: var(--font-archivo);
+  --font-roboto: var(--font-roboto);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+  font-family: var(--font-roboto);
+}
+
+h2 {
+  font-family: var(--font-archivo);
 }
