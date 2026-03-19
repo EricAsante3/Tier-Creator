@@ -9,6 +9,7 @@ import { CSSProperties, Ref } from "react";
 interface TierBaseProps extends Partial<SortableProps> {
   style?: CSSProperties;
   className?: string;
+  addiClassName?: string;
   column: Column<string, string>;
   columnId: UniqueIdentifier;
   children?: React.ReactNode;
@@ -18,6 +19,7 @@ interface TierBaseProps extends Partial<SortableProps> {
 export default function TierBase({
   style,
   className,
+  addiClassName = "",
   column,
   columnId,
   children,
@@ -32,8 +34,7 @@ export default function TierBase({
     className={className}
     ref={ref}    
     >
-
-        <div className="w-full aspect-12/1 flex flex-wrap">
+        <div className={`w-full aspect-12/1 flex flex-wrap ${addiClassName}`}>
             {children}
         </div>
     </div>

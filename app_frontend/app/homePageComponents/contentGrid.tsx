@@ -2,6 +2,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import CardSet from "./cardSet";
+import LoadingCardSet from "./loadingCardSet";
 
 export default function ContentGrid() {
   const router = useRouter();
@@ -16,6 +17,8 @@ export default function ContentGrid() {
                 
             </CardSet>
         ))}
+
+        <LoadingCardSet></LoadingCardSet>
       </div>
 
   );

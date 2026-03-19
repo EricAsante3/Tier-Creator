@@ -16,7 +16,7 @@ export default function SearchBar() {
   };
 
   return (
-    <div className="w-full min-h-24 h-1/8 max-h-32 xl:max-h-128 flex items-center justify-center absolute top-0">
+    <div className="w-full min-h-24 h-1/8 max-h-32 xl:max-h-128 flex items-center justify-center absolute top-0 z-10">
 
         <div className="bg-foreground border-highlight border-2 min-w-xl max-w-1/2 w-1/2 h-1/2 rounded-full pr-8 pl-8 pt-1 pb-1">
 

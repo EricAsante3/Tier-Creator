@@ -1,6 +1,6 @@
-"use client";
-import { GearIcon, ResetIcon, PlusIcon, ArrowDownIcon, AddRowIcon } from "@/icons/icons";
-import { Data, moveAllOthersInto, moveFromRowInto } from "./dragCode/tier-board.types";
+"use client"; // <-- needed in App Router for client-side interactivity
+import { Data } from "../../game/dragCode/tier-board.types";
+import LoadingCardSetItem from "./loadingCardSetDisplay";
 
 import {
   closestCenter,
@@ -16,126 +16,89 @@ import {
   UniqueIdentifier,
 } from "@dnd-kit/core";
 import { arrayMove, SortableContext } from "@dnd-kit/sortable";
-
-import { useCallback, useRef, useState } from "react";
+import SortableTierBase from "@/app/game/dragCode/sortable-tier-base";
+import SortableTierCardItem from "@/app/game/dragCode/sortable-tier-card-item";
+import TierCardItem from "@/app/game/dragCode/tier-card-item";
+import { useCallback, useRef, useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-import SortableTierRow from "./dragCode/sortable-tier-row";
-import SortableTierBase from "./dragCode/sortable-tier-base";
-import SortableTierCardItem from "./dragCode/sortable-tier-card-item";
-import TierCardItem from "./dragCode/tier-card-item";
-import TierRow from "./dragCode/tier-row";
-
 const initialData: Data<string, string> = {
-  ["Tier-S-id"]: {
+  ["Tier-Preview"]: {
     data: {color: "#00d90b", title: "S"},
-    children: [
-
-    ],
-  },
-
-  ["Tier-A-id"]: {
-    data: {color: "#008000", title: "A"},
-    children: [
-
-    ],
-  },
-
-  ["Tier-B-id"]: {
-    data: {color: "#FFA500", title: "B"},
-    children: [
-
-    ],
-  },
-
-  ["Tier-C-id"]: {
-    data: {color: "#ff4d00", title: "C"},
-    children: [
-
-    ],
-  },
-
-  ["Tier-F-id"]: {
-    data: {color: "#FF0000", title: "F"},
-    children: [
-
-    ],
-  },
-
-  ["Tier-Base-id"]: {
-    data: {color: "#ffffff"},
     children: [
         {
             "id": "22e771b4-ffd9-4cd2-9844-b1a50d37720d",
             "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/0d14d70d7b0534aa6631f4b21bd7918b.png"
         },
-        {
-            "id": "47124aaf-4df6-475f-93a8-957c1d368308",
-            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/2747c30d4c574d5beb88dd4b2ffc93e4.jpg"
-        },
-        {
-            "id": "ae28fea7-5a3e-4064-9eb6-697c02b831c3",
-            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/red.jpeg"
-        },
-        {
-            "id": "c54d48f5-edbd-4083-8a46-4807c1b8fbba",
-            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/9cee5e3436559735edc1d6286c3ec1f0.jpg"
-        },
-        {
-            "id": "f98ff8ec-4024-43c4-af77-533c63b34fa1",
-            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/img0831.png"
-        },
-        {
-            "id": "22e7721b4-ffd9-4cd2-9844-b1a50d37720d",
-            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/0d14d70d7b0534aa6631f4b21bd7918b.png"
-        },
-        {
-            "id": "47124aa2f-4df6-475f-93a8-957c1d368308",
-            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/2747c30d4c574d5beb88dd4b2ffc93e4.jpg"
-        },
-        {
-            "id": "ae282fea7-5a3e-4064-9eb6-697c02b831c3",
-            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/red.jpeg"
-        },
-        {
-            "id": "c54d428f5-edbd-4083-8a46-4807c1b8fbba",
-            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/9cee5e3436559735edc1d6286c3ec1f0.jpg"
-        },
-        {
-            "id": "f98ff8e2c-4024-43c4-af77-533c63b34fa1",
-            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/img0831.png"
-        },
-        {
-            "id": "22e771b4-3ffd9-4cd2-9844-b1a50d37720d",
-            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/0d14d70d7b0534aa6631f4b21bd7918b.png"
-        },
-        {
-            "id": "47124aaf3-4df6-475f-93a8-957c1d368308",
-            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/2747c30d4c574d5beb88dd4b2ffc93e4.jpg"
-        },
-        {
-            "id": "ae28fea7-53a3e-4064-9eb6-697c02b831c3",
-            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/red.jpeg"
-        },
-        {
-            "id": "c54d48f5-3edbd-4083-8a46-4807c1b8fbba",
-            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/9cee5e3436559735edc1d6286c3ec1f0.jpg"
-        },
-        {
-            "id": "f98ff8ec-40324-43c4-af77-533c63b34fa1",
-            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/img0831.png"
-        },
-    ],
-  }
-};
 
-export default function Home() {
+        {
+            "id": "f98ff8ec-40324-43cw4-af77-533c63b34fa1",
+            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/img0831.png"
+        },
+
+        {
+            "id": "22e771b4-ffd9-4cdw2-9844-b1a50d37720d",
+            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/0d14d70d7b0534aa6631f4b21bd7918b.png"
+        },
+
+        {
+            "id": "f98ff8ec-40324-4w3c4-af77-533c63b34fa1",
+            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/img0831.png"
+        },
+
+
+        {
+            "id": "22e771b4-ffd9-w4cd2-9844-b1a50d37720d",
+            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/0d14d70d7b0534aa6631f4b21bd7918b.png"
+        },
+
+        {
+            "id": "f98ff8ec-4w0324-43c4-af77-533c63b34fa1",
+            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/img0831.png"
+        },
+         {
+            "id": "22e771b4w-ffd9-4cd2-9844-b1a50d37720d",
+            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/0d14d70d7b0534aa6631f4b21bd7918b.png"
+        },
+
+        {
+            "id": "f98ff8ec-w40324-43c4-af77-533c63b34fa1",
+            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/img0831.png"
+        },
+         {
+            "id": "22e2771b4w-ffd9-4cd2-9844-b1a50d37720d",
+            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/0d14d70d7b0534aa6631f4b21bd7918b.png"
+        },
+
+        {
+            "id": "f98ff8ec-2w40324-43c4-af77-533c63b34fa1",
+            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/img0831.png"
+        },
+
+    ],
+  },
+}
+
+export default function CardSetDisplay() {
+
+  const [text, setText] = useState("");
+
+  useEffect(() => {
+    fetch("https://baconipsum.com/api/?type=all-meat&paras=2&start-with-lorem=1")
+      .then((res) => res.json())
+      .then((data) => setText(data.join("\n\n")));
+  }, []);
+
+
+
+
+
+
   const [tierConfig, setTierConfig] = useState<boolean>(false);
   const [data, setData] = useState<Data<string, string>>(initialData);
   const [columnIds, setColumnIds] = useState<UniqueIdentifier[]>(
     Object.keys(data)
   );
-
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
   const lastOverId = useRef<UniqueIdentifier | null>(null);
   const [cloneData, setCloneData] = useState({ ...data });
@@ -196,53 +159,6 @@ export default function Home() {
     [activeId, data]
   );
 
-  function handleClickAddColumn() {
-    const newId = uuidv4()
-
-    const newData = {
-      ...data,
-      [newId]: { data: {"color": "#ff9c9c", "title": "Default"}, children: [] },
-    };
-
-    setData(newData);
-
-    setColumnIds(prev => [...prev, newId]);
-  }
-
-  function handleClickDeleteColumn(columnId: UniqueIdentifier) {
-    const newData = moveFromRowInto(data, columnId, "Tier-Base-id");
-    delete newData[columnId];
-
-    setData(newData);
-    setColumnIds(prev => prev.filter(id => id !== columnId));
-  }
-
-  function handleRenameColumn(columnId: UniqueIdentifier, newTitle: string) {
-    setData((prev) => ({
-      ...prev,
-      [columnId]: {
-        ...prev[columnId],
-        data: {
-          ...prev[columnId].data,
-          title: newTitle,
-        },
-      },
-    }));
-  }
-
-  function handleColorChange(columnId: UniqueIdentifier, newColor: string) {
-    setData((prev) => ({
-      ...prev,
-      [columnId]: {
-        ...prev[columnId],
-        data: {
-          ...prev[columnId].data,
-          color: newColor,
-        },
-      },
-    }));
-  }
-
   function renderOverlay() {
     let content: React.ReactNode = null;
     if (activeId) {
@@ -268,7 +184,7 @@ export default function Home() {
       }
     }
 
-    return <DragOverlay className="aspect-square w-1/12">{content}</DragOverlay>;
+    return <DragOverlay className="aspect-square w-3/20">{content}</DragOverlay>;
   }
 
   function findColumnId(id: UniqueIdentifier) {
@@ -422,15 +338,8 @@ export default function Home() {
     setColumnIds(Object.keys(cloneData));
   }
 
-  function restCards() {
-    setData(prev =>
-    moveAllOthersInto(prev, "Tier-Base-id")
-  );
-  }
-  
   return (
-  <>
-    <main className="flex min-h-screen h-full justify-center bg-background">
+
       <DndContext
         id="dnd-kanban-context-id"
         collisionDetection={customCollision}
@@ -439,92 +348,42 @@ export default function Home() {
         onDragEnd={handleDragEnd}
         onDragCancel={handleDragCancel}
       >
-      <SortableContext items={columnIds.filter(id => id !== "Tier-Base-id")}>
-
-      <div className="w-10/12 max-w-300 aspect-video grid grid-rows-[0.05fr_auto_1fr] gap-8 ">
-
-
-
-        <div>
-        </div>
-        <div className="w-full flex flex-col space-y-2 items-center relative">
-
-          <div className="absolute top-1/64 -left-1/82 aspect-square w-1/32 " onClick={() => setTierConfig(!tierConfig)}>
-            <GearIcon className="cursor-pointer w-full h-full" stroke="#ffffff"></GearIcon>
-          </div>
-
-          {tierConfig ?
-
-            <div className="absolute bottom-0 -left-3/82 aspect-square w-2/32 " onClick={handleClickAddColumn}>
-                <AddRowIcon className="fill-white h-full w-full cursor-pointer "></AddRowIcon>
-            </div>
-
-          : 
-            null
-          }
-
-
-
-          {columnIds
-            .filter((columnId) => columnId !== "Tier-Base-id")
-            .map((columnId) => (
-            <SortableTierRow
-              key={columnId}
-              columnId={columnId}
-              column={data[columnId]}
-              activeCardId={activeId}
-              rowIds={columnIds}
-              tierConfig={tierConfig}
-              onClickDelete={handleClickDeleteColumn}
-              renameColum={handleRenameColumn}
-              colorChange={handleColorChange}
-              className="w-9/10 h-fit flex flex-row items-start relative"
-            >
-              <SortableContext items={data[columnId].children}>
-                  {data[columnId].children.map((item) => (
-                    <SortableTierCardItem
-                      key={item.id}
-                      item={item}
-                      className="bg-red-300 aspect-square w-1/12  text-sm"
-                    />
-                  ))}
-              </SortableContext>
-            </SortableTierRow>
-          ))}
-
-        </div>
+      <SortableContext items={columnIds}>
 
         <SortableTierBase
           key={"Tier-Base-id"}
           columnId={"Tier-Base-id"}
           column={data["Tier-Base-id"]}
-          onClickDelete={handleClickDeleteColumn}
-          className="w-full h-fit rounded-md bg-foreground min-h-96  border-highlight border-4 relative"
+          className="w-full h-full"
+          addiClassName="space-x-1 space-y-2 items-center "
         >
 
-          <div onClick={() => restCards()} className="absolute top-0 -left-1/20 aspect-square w-1/26" >
-            <ResetIcon className="cursor-pointer h-full w-full" stroke="#ffffff"></ResetIcon>
-          </div>
+          <SortableContext items={data["Tier-Preview"].children}>
 
-          <SortableContext items={data["Tier-Base-id"].children}>
-              {data["Tier-Base-id"].children.map((item) => (
-                <SortableTierCardItem
-                  key={item.id}
-                  item={item}
-                  className="bg-red-300 aspect-square w-1/12  text-sm"
-                />
-              ))}
+            <>
+              {text === "" ? (
+                // render 50 skeleton items
+                Array.from({ length: 50 }).map((_, i) => (
+                  <LoadingCardSetItem key={i} />
+                ))
+              ) : (
+                data["Tier-Preview"].children.map((item) => (
+                  <SortableTierCardItem
+                    key={item.id}
+                    item={item}
+                    className="bg-red-300 aspect-square w-[15%] text-sm"
+                  />
+                ))
+              )}
+            </>
+
           </SortableContext>
         </SortableTierBase>
 
-      </div>
       </SortableContext>
 
-      {renderOverlay()}
+      {renderOverlay()}           
       </DndContext>
-    </main>
-  
-  </>
 
   );
 }

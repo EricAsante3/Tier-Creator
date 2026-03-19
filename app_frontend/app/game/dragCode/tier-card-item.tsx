@@ -10,7 +10,7 @@ interface TaskItemProps extends Partial<SortableProps> {
   item: Item<string>;
   ref?: Ref<HTMLDivElement>;
 }
-export default function TeirCardItem({
+export default function TierCardItem({
   className,
   style,
   item,

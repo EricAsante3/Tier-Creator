@@ -25,19 +25,13 @@ export default function Home() {
   
     <main className="flex min-h-screen  h-full justify-center bg-background">
 
+      <div className="w-10/12 h-screen  flex flex-col relative">
 
+        <SearchBar></SearchBar>
 
-    <div className="w-10/12 h-screen  flex flex-col relative">
+        <ContentGrid></ContentGrid>
 
-      <SearchBar></SearchBar>
-
-      <ContentGrid></ContentGrid>
-
-
-    </div>
-
-
-
+      </div>
 
     </main>
   

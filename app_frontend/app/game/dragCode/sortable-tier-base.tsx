@@ -8,6 +8,7 @@ import TierBase from "./tier-base";
 
 interface SortableTaskColumnProps {
   className?: string;
+  addiClassName?: string;
   column: Column<string, string>;
   columnId: UniqueIdentifier;
   children?: React.ReactNode;
@@ -15,6 +16,7 @@ interface SortableTaskColumnProps {
 }
 export default function SortableTierBase({
   className,
+  addiClassName,
   column,
   columnId,
   children,
@@ -41,6 +43,7 @@ export default function SortableTierBase({
       column={column}
       columnId={columnId}
       onClickDelete={onClickDelete}
+      addiClassName={addiClassName}
 
     >
       {children}
