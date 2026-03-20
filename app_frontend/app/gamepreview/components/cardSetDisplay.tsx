@@ -1,6 +1,6 @@
 "use client"; // <-- needed in App Router for client-side interactivity
 import { Data } from "../../game/dragCode/tier-board.types";
-import LoadingCardSetItem from "./loadingCardSetDisplay";
+import LoadingCardSetItem from "./loadingCardSetItem";
 
 import {
   closestCenter,
@@ -363,9 +363,10 @@ export default function CardSetDisplay() {
             <>
               {text === "" ? (
                 // render 50 skeleton items
-                Array.from({ length: 50 }).map((_, i) => (
-                  <LoadingCardSetItem key={i} />
+                Array.from({ length: 48 }).map((_, i) => (
+                  <LoadingCardSetItem className="w-[15%]" key={i} />
                 ))
+                
               ) : (
                 data["Tier-Preview"].children.map((item) => (
                   <SortableTierCardItem

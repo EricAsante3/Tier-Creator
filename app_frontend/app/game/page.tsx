@@ -17,7 +17,7 @@ import {
 } from "@dnd-kit/core";
 import { arrayMove, SortableContext } from "@dnd-kit/sortable";
 
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import SortableTierRow from "./dragCode/sortable-tier-row";
@@ -25,6 +25,8 @@ import SortableTierBase from "./dragCode/sortable-tier-base";
 import SortableTierCardItem from "./dragCode/sortable-tier-card-item";
 import TierCardItem from "./dragCode/tier-card-item";
 import TierRow from "./dragCode/tier-row";
+import { data } from "framer-motion/m";
+import LoadingCardSetItem from "../gamepreview/components/loadingCardSetItem";
 
 const initialData: Data<string, string> = {
   ["Tier-S-id"]: {
@@ -428,6 +430,16 @@ export default function Home() {
   );
   }
   
+
+  const [text, setText] = useState("");
+
+  useEffect(() => {
+    fetch("https://baconipsum.com/api/?type=all-meat&paras=2&start-with-lorem=1")
+      .then((res) => res.json())
+      .then((data) => setText(data.join("\n\n")));
+  }, []);
+  
+
   return (
   <>
     <main className="flex min-h-screen h-full justify-center bg-background">
@@ -500,6 +512,9 @@ export default function Home() {
           column={data["Tier-Base-id"]}
           onClickDelete={handleClickDeleteColumn}
           className="w-full h-fit rounded-md bg-foreground min-h-96  border-highlight border-4 relative"
+          addiClassName={`
+            ${text === "" ? "space-x-2 space-y-2 items-center justify-center" : ""}
+          `}
         >
 
           <div onClick={() => restCards()} className="absolute top-0 -left-1/20 aspect-square w-1/26" >
@@ -507,13 +522,31 @@ export default function Home() {
           </div>
 
           <SortableContext items={data["Tier-Base-id"].children}>
-              {data["Tier-Base-id"].children.map((item) => (
-                <SortableTierCardItem
-                  key={item.id}
-                  item={item}
-                  className="bg-red-300 aspect-square w-1/12  text-sm"
-                />
-              ))}
+
+
+
+            <>
+              {text === "" ? (
+                // render 50 skeleton items
+                Array.from({ length: 55 }).map((_, i) => (
+                  <LoadingCardSetItem className="w-1/12" key={i} />
+                ))
+                
+              ) : (
+
+                data["Tier-Base-id"].children.map((item) => (
+                  <SortableTierCardItem
+                    key={item.id}
+                    item={item}
+                    className="bg-red-300 aspect-square w-1/12  text-sm"
+                  />
+                ))
+
+              )}
+            </>
+
+
+
           </SortableContext>
         </SortableTierBase>
 
@@ -528,3 +561,5 @@ export default function Home() {
 
   );
 }
+
+
