@@ -9,7 +9,7 @@ export default function GameModeSelect() {
     };
   return (
 
-        <div onClick={handleClick} className="bg-highlight row-span-1 col-span-1 rounded-2xl">
+        <div onClick={handleClick} className="bg-highlight row-span-1 col-span-1 rounded-2xl h-full min-h-0">
         </div>
 
   );

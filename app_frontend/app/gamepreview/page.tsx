@@ -9,15 +9,15 @@ export default function Home() {
   return (
   <>
   
-    <main className="flex min-h-screen h-full justify-center bg-background">
+    <main className="flex h-full justify-center bg-background">
 
-      <div className="w-10/12  grid grid-cols-3  gap-4 p-4 max-h-screen ">
+      <div className="w-10/12 grid grid-cols-3  p-4 h-full max-h-screen  min-h-screen">
 
         <CardSetInfo />
 
         <GameModeSelect />
 
-        <div className=" row-span-1 col-span-1 rounded-2xl p-2">
+        <div className=" row-span-1 col-span-1 rounded-2xl p-4 ">
 
           <CardSetDisplay />
 
