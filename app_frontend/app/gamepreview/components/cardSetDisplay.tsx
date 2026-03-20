@@ -355,7 +355,7 @@ export default function CardSetDisplay() {
           columnId={"Tier-Base-id"}
           column={data["Tier-Base-id"]}
           className="w-full h-full"
-          addiClassName="space-x-1 space-y-2 items-center "
+          addiClassName="space-x-1 space-y-2 items-center"
         >
 
           <SortableContext items={data["Tier-Preview"].children}>
