@@ -26,7 +26,9 @@ import SortableTierCardItem from "./dragCode/sortable-tier-card-item";
 import TierCardItem from "./dragCode/tier-card-item";
 import TierRow from "./dragCode/tier-row";
 import { data } from "framer-motion/m";
-import LoadingCardSetItem from "../gamepreview/components/loadingCardSetItem";
+import LoadingCardSetItem from "../gameModeSelect/components/loadingCardSetItem";
+
+import { Card } from "@/data/types/types";
 
 const initialData: Data<string, string> = {
   ["Tier-S-id"]: {
@@ -67,73 +69,37 @@ const initialData: Data<string, string> = {
   ["Tier-Base-id"]: {
     data: {color: "#ffffff"},
     children: [
-        {
-            "id": "22e771b4-ffd9-4cd2-9844-b1a50d37720d",
-            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/0d14d70d7b0534aa6631f4b21bd7918b.png"
-        },
-        {
-            "id": "47124aaf-4df6-475f-93a8-957c1d368308",
-            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/2747c30d4c574d5beb88dd4b2ffc93e4.jpg"
-        },
-        {
-            "id": "ae28fea7-5a3e-4064-9eb6-697c02b831c3",
-            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/red.jpeg"
-        },
-        {
-            "id": "c54d48f5-edbd-4083-8a46-4807c1b8fbba",
-            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/9cee5e3436559735edc1d6286c3ec1f0.jpg"
-        },
-        {
-            "id": "f98ff8ec-4024-43c4-af77-533c63b34fa1",
-            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/img0831.png"
-        },
-        {
-            "id": "22e7721b4-ffd9-4cd2-9844-b1a50d37720d",
-            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/0d14d70d7b0534aa6631f4b21bd7918b.png"
-        },
-        {
-            "id": "47124aa2f-4df6-475f-93a8-957c1d368308",
-            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/2747c30d4c574d5beb88dd4b2ffc93e4.jpg"
-        },
-        {
-            "id": "ae282fea7-5a3e-4064-9eb6-697c02b831c3",
-            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/red.jpeg"
-        },
-        {
-            "id": "c54d428f5-edbd-4083-8a46-4807c1b8fbba",
-            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/9cee5e3436559735edc1d6286c3ec1f0.jpg"
-        },
-        {
-            "id": "f98ff8e2c-4024-43c4-af77-533c63b34fa1",
-            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/img0831.png"
-        },
-        {
-            "id": "22e771b4-3ffd9-4cd2-9844-b1a50d37720d",
-            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/0d14d70d7b0534aa6631f4b21bd7918b.png"
-        },
-        {
-            "id": "47124aaf3-4df6-475f-93a8-957c1d368308",
-            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/2747c30d4c574d5beb88dd4b2ffc93e4.jpg"
-        },
-        {
-            "id": "ae28fea7-53a3e-4064-9eb6-697c02b831c3",
-            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/red.jpeg"
-        },
-        {
-            "id": "c54d48f5-3edbd-4083-8a46-4807c1b8fbba",
-            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/9cee5e3436559735edc1d6286c3ec1f0.jpg"
-        },
-        {
-            "id": "f98ff8ec-40324-43c4-af77-533c63b34fa1",
-            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/img0831.png"
-        },
     ],
   }
 };
 
-export default function Home() {
+interface GameOTLProps{
+  cards: Card[] | null
+
+}
+
+export default function GameOTL({cards}: GameOTLProps) {
   const [tierConfig, setTierConfig] = useState<boolean>(false);
-  const [data, setData] = useState<Data<string, string>>(initialData);
+  const [data, setData] = useState<Data<string, string>>(() => initialData);
+  const hasInitialized = useRef(false);
+
+
+  useEffect(() => {
+    if (!hasInitialized.current && cards) {
+      setData(prev => ({
+        ...prev,
+        ["Tier-Base-id"]: {
+          ...prev["Tier-Base-id"],
+          children: cards.map(card => ({
+            id: card.card_id,
+            image_url: card.image_url,
+          })),
+        },
+      }));
+      hasInitialized.current = true; // mark as done
+    }
+  }, [cards]);
+  
   const [columnIds, setColumnIds] = useState<UniqueIdentifier[]>(
     Object.keys(data)
   );
@@ -253,7 +219,7 @@ export default function Home() {
       if (data[activeId]) {
         content = (
 
-          <div className="cursor-grabbing bg-amber-900 opacity-0 h-16"></div>
+          <div className="cursor-grabbing  opacity-0 h-16"></div>
         );
       }
 
@@ -265,7 +231,7 @@ export default function Home() {
         );
 
         if (activeItem) {
-          content = <TierCardItem item={activeItem} className="cursor-grabbing aspect-square w-full" />;
+          content = <TierCardItem item={activeItem} className="cursor-grabbing aspect-square w-full " />;
         }
       }
     }
@@ -497,7 +463,7 @@ export default function Home() {
                     <SortableTierCardItem
                       key={item.id}
                       item={item}
-                      className="bg-red-300 aspect-square w-1/12  text-sm"
+                      className="aspect-square w-1/12  text-sm"
                     />
                   ))}
               </SortableContext>
@@ -538,7 +504,7 @@ export default function Home() {
                   <SortableTierCardItem
                     key={item.id}
                     item={item}
-                    className="bg-red-300 aspect-square w-1/12  text-sm"
+                    className=" aspect-square w-1/12  text-sm"
                   />
                 ))
 

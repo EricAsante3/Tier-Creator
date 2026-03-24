@@ -1,5 +1,5 @@
 "use client"; // <-- needed in App Router for client-side interactivity
-import { Data } from "../../game/dragCode/tier-board.types";
+import { Data } from "../../openTierList/dragCode/tier-board.types";
 import LoadingCardSetItem from "./loadingCardSetItem";
 
 import {
@@ -16,71 +16,28 @@ import {
   UniqueIdentifier,
 } from "@dnd-kit/core";
 import { arrayMove, SortableContext } from "@dnd-kit/sortable";
-import SortableTierBase from "@/app/game/dragCode/sortable-tier-base";
-import SortableTierCardItem from "@/app/game/dragCode/sortable-tier-card-item";
-import TierCardItem from "@/app/game/dragCode/tier-card-item";
+import SortableTierBase from "@/app/openTierList/dragCode/sortable-tier-base";
+import SortableTierCardItem from "@/app/openTierList/dragCode/sortable-tier-card-item";
+import TierCardItem from "@/app/openTierList/dragCode/tier-card-item";
 import { useCallback, useRef, useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { Card } from "@/data/types/types";
+
 
 const initialData: Data<string, string> = {
   ["Tier-Preview"]: {
     data: {color: "#00d90b", title: "S"},
     children: [
-        {
-            "id": "22e771b4-ffd9-4cd2-9844-b1a50d37720d",
-            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/0d14d70d7b0534aa6631f4b21bd7918b.png"
-        },
-
-        {
-            "id": "f98ff8ec-40324-43cw4-af77-533c63b34fa1",
-            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/img0831.png"
-        },
-
-        {
-            "id": "22e771b4-ffd9-4cdw2-9844-b1a50d37720d",
-            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/0d14d70d7b0534aa6631f4b21bd7918b.png"
-        },
-
-        {
-            "id": "f98ff8ec-40324-4w3c4-af77-533c63b34fa1",
-            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/img0831.png"
-        },
-
-
-        {
-            "id": "22e771b4-ffd9-w4cd2-9844-b1a50d37720d",
-            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/0d14d70d7b0534aa6631f4b21bd7918b.png"
-        },
-
-        {
-            "id": "f98ff8ec-4w0324-43c4-af77-533c63b34fa1",
-            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/img0831.png"
-        },
-         {
-            "id": "22e771b4w-ffd9-4cd2-9844-b1a50d37720d",
-            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/0d14d70d7b0534aa6631f4b21bd7918b.png"
-        },
-
-        {
-            "id": "f98ff8ec-w40324-43c4-af77-533c63b34fa1",
-            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/img0831.png"
-        },
-         {
-            "id": "22e2771b4w-ffd9-4cd2-9844-b1a50d37720d",
-            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/0d14d70d7b0534aa6631f4b21bd7918b.png"
-        },
-
-        {
-            "id": "f98ff8ec-2w40324-43c4-af77-533c63b34fa1",
-            "image_url": "https://d30xw6wjd1eomi.cloudfront.net/public/images_set2/img0831.png"
-        },
 
     ],
   },
 }
 
-export default function CardSetDisplay() {
+interface CardSetDisplayProps {
+  cards: Card[] | null;
+}
 
+export default function CardSetDisplay({cards}: CardSetDisplayProps) {
   const [text, setText] = useState("");
 
   useEffect(() => {
@@ -90,12 +47,31 @@ export default function CardSetDisplay() {
   }, []);
 
 
-
-
-
-
   const [tierConfig, setTierConfig] = useState<boolean>(false);
+
+
+
   const [data, setData] = useState<Data<string, string>>(initialData);
+  
+
+  useEffect(() => {
+    if (cards !== null) {
+      setData(prev => ({
+        ...prev,
+        ["Tier-Preview"]: {
+          ...prev["Tier-Preview"],
+          children: [
+            ...prev["Tier-Preview"].children,
+            ...cards.map(card => ({
+              id: card.card_id,
+              image_url: card.image_url,
+            })),
+          ],
+        },
+      }));
+    }
+  }, [cards]);
+
   const [columnIds, setColumnIds] = useState<UniqueIdentifier[]>(
     Object.keys(data)
   );
@@ -179,7 +155,7 @@ export default function CardSetDisplay() {
         );
 
         if (activeItem) {
-          content = <TierCardItem item={activeItem} className="cursor-grabbing aspect-square w-full" />;
+          content = <TierCardItem item={activeItem} className="cursor-grabbing aspect-square w-full " />;
         }
       }
     }
@@ -361,7 +337,7 @@ export default function CardSetDisplay() {
           <SortableContext items={data["Tier-Preview"].children}>
 
             <>
-              {text === "" ? (
+              {cards === null ? (
                 // render 50 skeleton items
                 Array.from({ length: 48 }).map((_, i) => (
                   <LoadingCardSetItem className="w-[15%]" key={i} />
@@ -372,7 +348,7 @@ export default function CardSetDisplay() {
                   <SortableTierCardItem
                     key={item.id}
                     item={item}
-                    className="bg-red-300 aspect-square w-[15%] text-sm"
+                    className=" aspect-square w-[15%] text-sm"
                   />
                 ))
               )}

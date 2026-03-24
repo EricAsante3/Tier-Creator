@@ -1,12 +1,10 @@
 "use client"; // <-- needed in App Router for client-side interactivity
-import { SkeletonTheme } from "react-loading-skeleton";
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 
 export default function LoadingCardSet() {
 
   return (
-    <SkeletonTheme baseColor="var(--foreground)" highlightColor="var(--highlight)">
       <div className="w-full aspect-4/3 rounded-xl flex flex-col p-2 justify-evenly ">
 
         {/* Image skeleton (takes 2/3 height) */}
@@ -25,7 +23,6 @@ export default function LoadingCardSet() {
         </div>
 
       </div>
-    </SkeletonTheme>
   );
 }
 

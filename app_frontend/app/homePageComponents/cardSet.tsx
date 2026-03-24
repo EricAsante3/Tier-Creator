@@ -3,31 +3,23 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import LoadingCardSet from "./loadingCardSet";
+import { CardSetMetaData } from "../../data/types/types";
+
+export interface InputInterface {
+  cardSetData: CardSetMetaData;
+}
 
 
-export default function CardSet() {
+export default function CardSet({cardSetData}: InputInterface) {
   const router = useRouter();
 
     const handleClick = () => {
-        router.push("/gamepreview"); // Navigate to /game page
+        router.push(`/play?cardset=${cardSetData.set_id}`);
     };
-
-  const [text, setText] = useState("");
-
-  useEffect(() => {
-    fetch("https://baconipsum.com/api/?type=all-meat&paras=2&start-with-lorem=1")
-      .then((res) => res.json())
-      .then((data) => setText(data.join("\n\n")));
-  }, []);
-
-
-
 
   return (
     <>
-    { text === "" ?
-        <LoadingCardSet></LoadingCardSet>
-    :
+
 
         <motion.div
         onClick={handleClick}
@@ -37,10 +29,16 @@ export default function CardSet() {
         }}
         transition={{ type: "spring" }}
         >
-        <div className="w-full h-2/3 bg-red-600/20 rounded-xl"></div>
+        <div className="w-full h-2/3 rounded-xl overflow-hidden bg-white">
+        <img
+            src={cardSetData.thumbnail_url}
+            alt="Thumbnail"
+            className="w-full h-full object-cover"
+        />
+        </div>
 
-        <h1 className="font-semibold text-xs md:text-sm lg:text-lg w-full truncate overflow-hidden whitespace-nowrap">
-            {text}
+        <h1 className=" w-full font-bold text-xs md:text-sm lg:text-lg line-clamp-2">
+            {cardSetData.title}
         </h1>
 
         <h1 className="font-semibold text-xs w-full truncate overflow-hidden whitespace-nowrap">
@@ -48,7 +46,6 @@ export default function CardSet() {
         </h1>
         </motion.div>
 
-    }
     </>
 );
 }

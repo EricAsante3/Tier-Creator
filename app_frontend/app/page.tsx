@@ -5,20 +5,12 @@ import ContentGrid from "./homePageComponents/contentGrid";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
+
 export default function Home() {
   const router = useRouter();
 
   const searchParams = useSearchParams();
   console.log(searchParams.get("search_query"))
-
-  const [input, setInput] = useState(searchParams.get("search") || "");
-  
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      router.push(`/?search_query=${input}`);
-    }
-  };
-
 
  return (
   <>

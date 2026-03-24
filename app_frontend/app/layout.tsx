@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import ThemeProvider from "./themeProvider/themeProvider";
+import { SkeletonTheme } from "react-loading-skeleton";
+import { DataProvider } from "@/data/data";
 
 export const metadata: Metadata = {
   title: "Tier Creator",
@@ -14,10 +16,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`antialiased`} >
-        <ThemeProvider />
-        {children}
-      </body>
+      <SkeletonTheme baseColor="var(--foreground)" highlightColor="var(--highlight)">
+        <DataProvider>
+          <body className={`antialiased`} >
+            <ThemeProvider />
+            {children}
+          </body>
+        </DataProvider>
+      </SkeletonTheme>
     </html>
   );
 }
