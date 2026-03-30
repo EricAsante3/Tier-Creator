@@ -64,7 +64,7 @@ export default function Home({cardSetMetaData, setCardSetMetaData, cardSetCards,
   
     <main className="flex h-full justify-center bg-background">
 
-      <div className="w-10/12 grid grid-cols-3  p-4 h-full max-h-screen  min-h-screen">
+      <div className="w-10/12 grid grid-cols-3  p-10 h-full max-h-screen  min-h-screen">
 
         <CardSetInfo METADATA={cardSetMetaData} />
 

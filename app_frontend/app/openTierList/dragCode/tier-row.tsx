@@ -66,8 +66,11 @@ export default function TierRow({
     ref={ref}>
       
         <div 
-          style={{ backgroundColor: colord(color).toHex() }}
-          className="bg-red-300 aspect-square max-w-1/12 w-1/12 border-red-900/50 rounded-xs border-2 flex items-center justify-center overflow-hidden relative">
+          style={{ 
+                    backgroundColor: colord(color).toHex(), 
+                    borderColor: colord(color).darken(0.1).toHex() // darker border                   
+                }}
+          className="aspect-square max-w-1/12 w-1/12  rounded-xs border-2 flex items-center justify-center overflow-hidden relative">
           <h1 
             contentEditable
             suppressContentEditableWarning

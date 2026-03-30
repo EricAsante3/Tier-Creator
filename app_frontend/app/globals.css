@@ -60,3 +60,10 @@ h1 {
 h2 {
   font-family: var(--font-archivo);
 }
+
+.css_shadow {
+
+box-shadow: var(--color-background) 0px 3px 8px;
+
+
+}
