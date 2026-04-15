@@ -4,9 +4,10 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import LoadingCardSet from "./loadingCardSet";
 import { CardSetMetaData } from "../../data/types/types";
+import { CardSetQuery } from "../../data/types/types";
 
 export interface InputInterface {
-  cardSetData: CardSetMetaData;
+  cardSetData: CardSetQuery;
 }
 
 
@@ -14,7 +15,7 @@ export default function CardSet({cardSetData}: InputInterface) {
   const router = useRouter();
 
     const handleClick = () => {
-        router.push(`/play?cardset=${cardSetData.set_id}`);
+        // router.push(`/play?cardset=${cardSetData.set_id}`);
     };
 
   return (
@@ -38,7 +39,7 @@ export default function CardSet({cardSetData}: InputInterface) {
         </div>
 
         <h1 className=" w-full font-bold text-xs md:text-sm lg:text-lg line-clamp-2">
-            {cardSetData.title}
+            {cardSetData.Metadata.title}
         </h1>
 
         <h1 className="font-semibold text-xs w-full truncate overflow-hidden whitespace-nowrap">

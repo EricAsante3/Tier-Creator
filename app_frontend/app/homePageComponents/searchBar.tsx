@@ -1,22 +1,37 @@
 "use client"; // <-- needed in App Router for client-side interactivity
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useState, Dispatch, SetStateAction } from "react";
 
-export default function SearchBar() {
+
+interface SearchBarProps
+{
+  setQueryParam: Dispatch<SetStateAction<string | null>>
+}
+
+export default function SearchBar({setQueryParam}: SearchBarProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  console.log(searchParams.get("search_query"))
 
-  const [input, setInput] = useState(searchParams.get("search") || "");
+  const [input, setInput] = useState(searchParams.get("search_query") || "");
   
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      router.push(`/?search_query=${input}`);
+      const currentQuery = searchParams.get("search_query") || "";
+
+      if (input !== currentQuery) {
+        if (input === "" || null){
+          setQueryParam(null)
+          router.push(`/`);
+        } else {
+          setQueryParam(input)
+          router.push(`/?search_query=${input}`);
+        }
+      }
     }
   };
 
   return (
-    <div className="w-full min-h-24 h-1/8 max-h-32 xl:max-h-128 flex items-center justify-center absolute top-0 z-10">
+    <div className="w-full min-h-24 h-1/8 max-h-32 xl:max-h-128 flex items-center justify-center absolute top-4 z-10">
 
         <div className="bg-foreground border-highlight border-2 min-w-xl max-w-1/2 w-1/2 h-1/2 rounded-full pr-8 pl-8 pt-1 pb-1">
 
@@ -24,7 +39,7 @@ export default function SearchBar() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyDown}
-                placeholder="Search..."
+                placeholder={ input === "" || input === null ? "Search..." : input }
                 className="w-full h-full outline-none bg-transparent text-text font-archivo text-3xl"
             />
 

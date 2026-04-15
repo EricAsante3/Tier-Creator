@@ -15,7 +15,7 @@ const DataContext = createContext<DataContextType | undefined>(undefined);
 export const DataProvider = ({ children }: { children: ReactNode }) => {
     
     const apiClient = useRef(
-        new ApiClient("https://hzd2s1x0d6.execute-api.us-east-1.amazonaws.com/prod", {
+        new ApiClient("https://zeg08w2po8.execute-api.us-east-1.amazonaws.com/prod", {
             Authorization: "Bearer token",
         })
     );

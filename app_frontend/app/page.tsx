@@ -8,20 +8,20 @@ import { useState } from "react";
 
 export default function Home() {
   const router = useRouter();
-
   const searchParams = useSearchParams();
-  console.log(searchParams.get("search_query"))
+
+  const [queryParam, setQueryParam] = useState<string | null>(searchParams.get("search_query"));
 
  return (
   <>
   
     <main className="flex min-h-screen  h-full justify-center bg-background">
 
-      <div className="w-10/12 h-screen  flex flex-col relative">
+      <div className="w-10/12 h-screen  flex flex-col relative ">
 
-        <SearchBar></SearchBar>
+        <SearchBar setQueryParam={setQueryParam}></SearchBar>
 
-        <ContentGrid></ContentGrid>
+        <ContentGrid queryParam={queryParam}></ContentGrid>
 
       </div>
 
