@@ -15,11 +15,12 @@ export default function Home() {
  return (
   <>
   
-    <main className="flex min-h-screen  h-full justify-center bg-background">
+    <main className="flex min-h-screen  h-full justify-center bg-background relative">
 
-      <div className="w-10/12 h-screen  flex flex-col relative ">
+      <SearchBar setQueryParam={setQueryParam}></SearchBar>
 
-        <SearchBar setQueryParam={setQueryParam}></SearchBar>
+      <div className="w-10/12 h-screen  flex flex-col relative overflow-y-scroll ">
+
 
         <ContentGrid queryParam={queryParam}></ContentGrid>
 
