@@ -11,7 +11,7 @@ This system generates product recommendations using semantic embeddings, vector 
 
 ### Models Used
 
-- Embedding Model: **all-MiniLM-L6-v2**
+- Text Embedding Model: **all-MiniLM-L6-v2**
 - Normalization Model: **My own Custom-trained model**
 - Re-Ranking Model: **cross-encoder/ms-marco-MiniLM-L-6-v2**
 
