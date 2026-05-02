@@ -4,11 +4,9 @@
 This system generates product recommendations using semantic embeddings, vector normalization, approximate nearest neighbor (ANN) search, and cross-encoder re-ranking.
 
 
-<p align="center">
-  <img src="screenshots/screenshot1.png" width="30%" />
-  <img src="screenshots/screenshot2.png" width="30%" />
-  <img src="screenshots/screenshot3.png" width="30%" />
-</p>
+| Screenshot 1 | Screenshot 2 | Screenshot 3 |
+|-------------|-------------|-------------|
+| <img src="screenshots/screenshot1.png" width="250"/> | <img src="screenshots/screenshot2.png" width="250"/> | <img src="screenshots/screenshot3.png" width="250"/> |
 
 ---
 
