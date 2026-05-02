@@ -15,25 +15,23 @@ interface ContentGridProps{
   queryParam: string | null
 }
 
-
-
-
 export default function ContentGrid({queryParam}: ContentGridProps) {
   const { apiClient } = useData();
   const [loadedCardSets, setLoadedCardSets] = useState<CardSetQuery[] | null>(null);
-
   const [currentPage, setCurrentPage] = useState(1);
+
   const ITEMS_PER_PAGE = 25;
 
 
   async function getCardsets(queryParam: string | null) {
     let data;
-    if (queryParam && queryParam !== "") {
+    if (queryParam && queryParam !== "" && queryParam !== null && queryParam !== undefined) {
       data = await apiClient.current.post<{CardSets: CardSetQuery[]}>("/queryCards", {"query": queryParam});
     } else {
       data = await apiClient.current.post<{CardSets: CardSetQuery[]}>("/queryCards", {"random": 1});
     }
     setLoadedCardSets(data.CardSets)
+    setCurrentPage(1)
     console.log(data)
   }
 
@@ -42,9 +40,6 @@ export default function ContentGrid({queryParam}: ContentGridProps) {
     getCardsets(queryParam)
   }, [queryParam])
 
-
-
-
   // Slice the full list based on current page
   const totalPages = loadedCardSets ? Math.ceil(loadedCardSets.length / ITEMS_PER_PAGE) : 0;
 
@@ -52,15 +47,11 @@ export default function ContentGrid({queryParam}: ContentGridProps) {
     ? loadedCardSets.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE)
     : null;
 
-
-
-
-
   return (
     <>
 
 
-      <div className=" overflow-y-auto  pt-16 overflow-visible ">
+      <div className="pt-32 overflow-visible h-fit flex items-end">
         
 
         {
@@ -76,13 +67,12 @@ export default function ContentGrid({queryParam}: ContentGridProps) {
             <div className="w-full  flex p-2 items-end justify-between">
               <div>
                 <h1 className="text-lg font-bold text-text">
-                  {loadedCardSets === null
-                    ? "Loading..."
-                    : `${(currentPage - 1) * ITEMS_PER_PAGE + 1}–${Math.min(
+                  {loadedCardSets && queryParam
+                    ? `${(currentPage - 1) * ITEMS_PER_PAGE + 1}–${Math.min(
                         currentPage * ITEMS_PER_PAGE,
                         loadedCardSets.length
                       )} of ${loadedCardSets.length} results for "${queryParam}"`
-                  }
+                    : null}
                 </h1>
               </div>
             </div>

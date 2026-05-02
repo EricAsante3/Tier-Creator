@@ -32,7 +32,7 @@ export default function CardSet({cardSetData}: InputInterface) {
         >
         <div className="w-full h-2/3 rounded-xl overflow-hidden bg-white">
         <img
-            src={cardSetData.thumbnail_url}
+            src={cardSetData.Metadata.thumbnail_url}
             alt="Thumbnail"
             className="w-full h-full object-cover"
         />

@@ -23,7 +23,8 @@ export interface CardSetQuery {
 
 export interface CardSetQueryMetaData {
   title: string,
-  description: string
+  description: string,
+  thumbnail_url: string
 }
 
 
