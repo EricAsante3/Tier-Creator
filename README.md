@@ -1,5 +1,4 @@
-# ML Twin-Tower Recommendation System – Design Flow
-
+# ML Twin-Tower Recommendation System
 ## Overview
 This system generates product recommendations using semantic embeddings, vector normalization, approximate nearest neighbor (ANN) search, and cross-encoder re-ranking.
 
