@@ -15,8 +15,6 @@ This system generates product recommendations using semantic embeddings, vector 
 - Normalization Model: **My own Custom-trained model**
 - Re-Ranking Model: **cross-encoder/ms-marco-MiniLM-L-6-v2**
 
-
-
 ---
 
 ## System Flow
@@ -26,11 +24,9 @@ Products → Embedding (768d) → Normalize (384d) → Store
 
 Online:
 User Query → Embedding (384d) → Normalize (384d)
-           → ANN Search (Top 100)
+           → ANN Search
            → Re-Rank (Cross-Encoder)
-           → Return Results
-
-
+           → Return Result Products
 
 ## Key Features
 
