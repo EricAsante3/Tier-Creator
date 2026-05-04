@@ -32,7 +32,7 @@ User Query → Embedding (384d) → Normalize (384d)
 
 - Semantic search (beyond keyword matching)
 - Fast retrieval using ANN
-- Improved accuracy via re-ranking
+- Improved results accuracy via re-ranking
 - Low vector storage with reduced dimensions
 
 ---
