@@ -5,7 +5,7 @@ This system generates product recommendations using semantic embeddings, vector 
 
 | Screenshot 1 | Screenshot 2 |
 |-------------|-------------|
-| <img src="screenshots/image1.png" width="600"/> | <img src="screenshots/image2.png" width="600"/> |
+| <img src="screenshots/image1.png" width="700"/> | <img src="screenshots/image2.png" width="700"/> |
 
 ---
 
