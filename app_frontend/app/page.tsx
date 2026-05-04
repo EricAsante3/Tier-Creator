@@ -19,10 +19,12 @@ export default function Home() {
 
       <SearchBar setQueryParam={setQueryParam}></SearchBar>
 
-      <div className="w-10/12 h-screen  flex flex-col relative overflow-y-scroll ">
+      <div className=" w-full flex flex-col items-center justify-center relative overflow-y-scroll ">
+        <div className="w-10/12 h-screen ">
+                <ContentGrid queryParam={queryParam}></ContentGrid>
 
+        </div>
 
-        <ContentGrid queryParam={queryParam}></ContentGrid>
 
       </div>
 

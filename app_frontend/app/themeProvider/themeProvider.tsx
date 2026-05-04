@@ -8,7 +8,7 @@ export default function ThemeProvider() {
     if (selectedTheme) {
       document.body.classList.add(selectedTheme)
     } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      document.body.classList.add("dark")
+      document.body.classList.add("light")
     } else {
       document.body.classList.add("light")
     }

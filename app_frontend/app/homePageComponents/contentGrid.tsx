@@ -17,6 +17,7 @@ interface ContentGridProps{
 
 export default function ContentGrid({queryParam}: ContentGridProps) {
   const { apiClient } = useData();
+  const router = useRouter();
   const [loadedCardSets, setLoadedCardSets] = useState<CardSetQuery[] | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -27,8 +28,12 @@ export default function ContentGrid({queryParam}: ContentGridProps) {
     let data;
     if (queryParam && queryParam !== "" && queryParam !== null && queryParam !== undefined) {
       data = await apiClient.current.post<{CardSets: CardSetQuery[]}>("/queryCards", {"query": queryParam});
+      setLoadedCardSets(null)
+      
     } else {
       data = await apiClient.current.post<{CardSets: CardSetQuery[]}>("/queryCards", {"random": 1});
+      router.push(`/`);
+      setLoadedCardSets(null)
     }
     setLoadedCardSets(data.CardSets)
     setCurrentPage(1)
@@ -101,56 +106,54 @@ export default function ContentGrid({queryParam}: ContentGridProps) {
                 
             )))}
 
-            <div className="w-full row-span-4 col-span-5 aspect-8/1 p-4">
+            <div className="w-full row-span-4 col-span-5 aspect-8/1 p-2 flex items-center justify-center flex-col space-y-4">
 
-              <div>
-                {totalPages > 1 && (
-                <div className="flex items-center justify-center gap-2 py-4">
+              {totalPages > 1 && (
+              <div className="flex w-full items-center h-1/4 justify-center gap-2 py-4 text-text">
 
 
+                <button
+                  onClick={() => setCurrentPage(p => Math.max(p - 1, 1))}
+                  disabled={currentPage === 1}
+                  className="px-4 py-2 bg-foreground  rounded disabled:opacity-50"
+                >
+                  <h1 className="font-bold">
+                    Prev
+                  </h1>
+                </button>
+
+
+
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
                   <button
-                    onClick={() => setCurrentPage(p => Math.max(p - 1, 1))}
-                    disabled={currentPage === 1}
-                    className="px-4 py-2 bg-foreground text-white rounded  disabled:opacity-50"
+                    key={page}
+                    onClick={() => setCurrentPage(page)}
+                    className={`px-3 py-2 rounded ${
+                      currentPage === page ? "bg-highlight " : "bg-foreground cursor-pointer"
+                    }`}
                   >
-                    <h1>
-                      Prev
+                    <h1 className="font-bold">
+                      {page}
                     </h1>
                   </button>
+                ))}
 
 
-
-                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
-                    <button
-                      key={page}
-                      onClick={() => setCurrentPage(page)}
-                      className={`px-3 py-2 rounded ${
-                        currentPage === page ? "bg-highlight text-white" : "bg-foreground text-white cursor-pointer"
-                      }`}
-                    >
-                      <h1>
-                        {page}
-                      </h1>
-                    </button>
-                  ))}
+                <button
+                  onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))}
+                  disabled={currentPage === totalPages}
+                  className="px-4 py-2 bg-foreground  rounded cursor-pointer disabled:opacity-50"
+                >
+                  <h1 className="font-bold">
+                    Next
+                  </h1>
+                </button>
 
 
-                  <button
-                    onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))}
-                    disabled={currentPage === totalPages}
-                    className="px-4 py-2 bg-foreground text-white rounded cursor-pointer disabled:opacity-50"
-                  >
-                    <h1>
-                      Next
-                    </h1>
-                  </button>
-
-
-                </div>
-              )}
               </div>
+              )}
 
-              <div className="bg-foreground w-full h-full rounded-2xl">
+              <div className="bg-foreground w-full h-3/4 rounded-2xl">
               </div>
         
             </div>
